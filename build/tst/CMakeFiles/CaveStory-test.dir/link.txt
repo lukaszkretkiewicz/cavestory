@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/CaveStory-test.dir/example_test.cpp.o -o CaveStory-test  ../lib/libCaveStory_lib.a ../lib/libgmock_maind.a ../lib/libgmockd.a ../lib/libgtestd.a -lpthread 

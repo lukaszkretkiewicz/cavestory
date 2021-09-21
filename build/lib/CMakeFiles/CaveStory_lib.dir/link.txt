@@ -1,0 +1,2 @@
+/usr/bin/ar qc libCaveStory_lib.a CMakeFiles/CaveStory_lib.dir/example.cpp.o
+/usr/bin/ranlib libCaveStory_lib.a
