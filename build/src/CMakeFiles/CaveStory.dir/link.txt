@@ -1,1 +1,0 @@
-/usr/bin/c++ -g CMakeFiles/CaveStory.dir/main.cpp.o -o CaveStory  ../lib/libCaveStory_lib.a -lSDL2 
