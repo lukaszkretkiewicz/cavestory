@@ -6,7 +6,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_BUILD_TYPE Debug)
 
 include(FetchContent)
-
 FetchContent_Declare(
 SDL2
 GIT_REPOSITORY "https://github.com/SDL-mirror/SDL.git"
@@ -24,6 +23,5 @@ project(CaveStory)
 include_directories(src)
 
 add_subdirectory(src)
-add_subdirectory(tst)
-add_subdirectory(lib)
-add_subdirectory(headers)
+add_subdirectory(test)
+add_subdirectory(inc)

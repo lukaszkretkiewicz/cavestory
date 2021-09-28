@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 
 include(GoogleTest)
 
-# Download and unpack googletest at configure time
+
 configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
 execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
   RESULT_VARIABLE result
@@ -27,18 +27,15 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
                  EXCLUDE_FROM_ALL)
 
 set(MOCK
+    main.cpp
     GraphicsBuilderMock.cpp)
 
-add_library(${PROJECT_NAME}_mocks ${MOCK})
-add_executable(${PROJECT_NAME}-test main.cpp)
-target_include_directories(${PROJECT_NAME}_mocks PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(${PROJECT_NAME}-test
-                      ${PROJECT_NAME}_lib
+add_executable(${PROJECT_NAME}-test ${MOCK})
+target_include_directories(${PROJECT_NAME}-test PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(${PROJECT_NAME}-test PUBLIC
                       ${PROJECT_NAME}_headers
-                      ${PROJECT_NAME}_mocks 
                       gtest
                       gtest_main 
                       gmock
                       gmock_main)
-
 gtest_discover_tests(${PROJECT_NAME}-test)
