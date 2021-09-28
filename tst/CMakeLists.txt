@@ -21,16 +21,24 @@ endif()
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 set(INSTALL_GTEST OFF CACHE BOOL "" FORCE)
 
-# Add googletest directly to our build. This defines
-# the gtest and gtest_main targets.
+
 add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
                  ${CMAKE_CURRENT_BINARY_DIR}/googletest-build
                  EXCLUDE_FROM_ALL)
 
+set(MOCK
+    GraphicsBuilderMock.cpp)
 
+add_library(${PROJECT_NAME}_mocks ${MOCK})
+add_executable(${PROJECT_NAME}-test main.cpp)
+target_include_directories(${PROJECT_NAME}_mocks PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(${PROJECT_NAME}-test
+                      ${PROJECT_NAME}_lib
+                      ${PROJECT_NAME}_headers
+                      ${PROJECT_NAME}_mocks 
+                      gtest
+                      gtest_main 
+                      gmock
+                      gmock_main)
 
-# Now simply link against gtest or gtest_main as needed. Eg
-add_executable(${PROJECT_NAME}-test example_test.cpp)
-target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME}_lib gmock_main)
-#target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME}_headers)
 gtest_discover_tests(${PROJECT_NAME}-test)
