@@ -1,7 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "player.h"
+#include "player.hpp"
 #include "level.h"
 #include "hud.h"
 #include "graphics.h"
