@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "IGraphicsBuilder.hpp"
+#include "GraphicsBuilderMock.hpp"
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);

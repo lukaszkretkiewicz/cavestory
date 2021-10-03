@@ -3,8 +3,8 @@
 class IGraphicsBuilder
 {
 protected:
-    virtual int CreateWindowAndRenderer(int width, int height, uint32_t window_flags) = 0;
+    virtual void CreateWindowAndRenderer(int width, int height, Uint32 window_flags) = 0;
     virtual void SetWindowTitle(const char *title) = 0;
-    virtual int DestroyWindow() = 0;
-    virtual int DestroyRenderer() = 0;
+    virtual void DestroyWindow() = 0;
+    virtual void DestroyRenderer() = 0;
 };

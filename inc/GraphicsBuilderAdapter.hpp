@@ -8,10 +8,8 @@ class GraphicsBuilderAdapter : public IGraphicsBuilder
 public:
     GraphicsBuilderAdapter()
     {
-        window=std::make_shared<SDL_Window*>();
-        renderer=std::make_shared<SDL_Renderer*>();
         CreateWindowAndRenderer(width, height, 0);
-        SetWindowTitle("Cavestory");
+        SetWindowTitle();
     }
     ~GraphicsBuilderAdapter()
     {
@@ -22,23 +20,24 @@ public:
 private:
     int width = 800;
     int height = 640;
-    std::shared_ptr<SDL_Window* > window;
-    std::shared_ptr<SDL_Renderer *> renderer;
+    SDL_Window *window;
+    SDL_Renderer *renderer;
 
-    int CreateWindowAndRenderer(int _width, int _height, uint32_t _window_flags) override
+    void CreateWindowAndRenderer(int _width, int _height, Uint32 _window_flags) override
     {
-        SDL_CreateWindowAndRenderer(_width, _height, _window_flags, window.get(), renderer.get());
+        SDL_Init(SDL_INIT_EVERYTHING);
+        SDL_CreateWindowAndRenderer(_width, _height, _window_flags, &window, &renderer);
     }
-    void SetWindowTitle(const char *title="Cavestory") override
+    void SetWindowTitle(const char *title = "Cavestory") override
     {
-        SDL_SetWindowTitle(*window, title);
+        SDL_SetWindowTitle(window, title);
     }
-    int DestroyWindow() override
+    void DestroyWindow() override
     {
-        SDL_DestroyWindow(*window);
+        SDL_DestroyWindow(window);
     }
-    int DestroyRenderer() override
+    void DestroyRenderer() override
     {
-        SDL_DestroyRenderer(*renderer);
+        SDL_DestroyRenderer(renderer);
     }
 };
