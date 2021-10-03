@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
-set(HEADERS 
-    game.hpp
+set(HEADERS
+    Game.hpp
+    IGame.hpp
     IGraphicsBuilder.hpp)
 
 add_library(${PROJECT_NAME}_headers ${HEADERS})

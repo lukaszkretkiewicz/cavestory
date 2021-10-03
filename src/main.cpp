@@ -1,8 +1,8 @@
-#include "SDL.h" 
-#include "game.hpp"
+#include "SDL.h"
+#include "Game.hpp"
 int main()
 {
-  Game game;
-  
+ // Game game;
+
   return 0;
 }
