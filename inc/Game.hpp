@@ -1,14 +1,15 @@
 #include <memory>
-#include "GraphicsBuilder.hpp"
-#include "IGame.hpp"
-class Game : public IGame
+#include "GraphicsBuilderAdapter.hpp"
+
+template <class T>
+class Game
 {
 public:
-    Game(std::shared_ptr<IGraphicsBuilder> _builder) : builder(_builder)
+    Game(std::shared_ptr<T> _builder) : builder(_builder)
     {
-        // std::make_shared<GraphicsBuilder>(builder);
+        builder = std::make_shared<T>();
     }
 
 protected:
-    std::shared_ptr<IGraphicsBuilder> builder;
+    std::shared_ptr<T> builder;
 };

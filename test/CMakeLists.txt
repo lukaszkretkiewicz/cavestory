@@ -28,14 +28,14 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
 
 set(MOCK
     main.cpp
-    GraphicsBuilderMock.cpp)
+    GraphicsBuilderMock.hpp)
 
 add_executable(${PROJECT_NAME}-test ${MOCK})
 target_include_directories(${PROJECT_NAME}-test PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(${PROJECT_NAME}-test PUBLIC
                       ${PROJECT_NAME}_headers
                       gtest
-                      gtest_main 
+                      gtest_main
                       gmock
                       gmock_main)
 gtest_discover_tests(${PROJECT_NAME}-test)
