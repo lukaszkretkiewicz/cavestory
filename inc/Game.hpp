@@ -1,6 +1,6 @@
 #include <memory>
-#include "GraphicsBuilderAdapter.hpp"
-
+#include "Graphics.hpp"
+/*
 template <class T>
 class Game
 {
@@ -25,3 +25,4 @@ private:
     std::shared_ptr<T> builder;
     SDL_Event event;
 };
+*/

@@ -1,34 +1,29 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
-#include "IGraphicsBuilder.hpp"
+#include "Graphics.hpp"
 #include "SDL2/SDL.h"
-#include "Game.hpp"
+//#include "Game.hpp"
 
 using namespace testing;
 
-class GraphicsBuilderMock : public IGraphicsBuilder
+class SdlWrapperMock : public ISdlWrapper
 {
 public:
     int screen_width = 800;
     int screen_height = 640;
-    std::shared_ptr<SDL_Window> window;
-    std::shared_ptr<SDL_Renderer> renderer;
 
-    MOCK_METHOD(void, CreateWindowAndRenderer, (int, int, Uint32), (override));
-    MOCK_METHOD(void, SetWindowTitle, (const char *), (override));
-    MOCK_METHOD(void, DestroyWindow, (), (override));
-    MOCK_METHOD(void, DestroyRenderer, (), (override));
-    GraphicsBuilderMock() = default;
-    ~GraphicsBuilderMock() = default;
+    MOCK_METHOD(SDL_Window*, CreateWindow, (const char *title, int x, int y, int w, int h, Uint32 flags), (override));
+    MOCK_METHOD(int, Init, (), (override));
+    SdlWrapperMock () = default;
+    ~SdlWrapperMock () = default;
 };
 
 TEST(GameTest, whenGameIsStartedPrepareWindow)
 {
-    std::shared_ptr<GraphicsBuilderMock> graphicsBuilderMock;
-    EXPECT_CALL(*graphicsBuilderMock, CreateWindowAndRenderer(_, _, _)).Times(1);
-    EXPECT_CALL(*graphicsBuilderMock, SetWindowTitle(_)).Times(1);
-    EXPECT_CALL(*graphicsBuilderMock, DestroyWindow()).Times(1);
-    EXPECT_CALL(*graphicsBuilderMock, DestroyRenderer()).Times(1);
-    Game<GraphicsBuilderMock> game(graphicsBuilderMock);
+    auto sdl = std::make_shared<SdlWrapperMock>();
+    Graphics graphics(sdl);
+    EXPECT_CALL(*sdl, CreateWindow(_, _, _, _ ,_, _)).Times(1);
+    EXPECT_CALL(*sdl, Init()).Times(1);
+//    Game<GraphicsBuilderMock> game(graphicsBuilderMock);
     // ASSERT_EQ(graphicsBuilderMock.window, 1);
 }

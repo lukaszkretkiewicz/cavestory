@@ -2,8 +2,11 @@
 #include "Game.hpp"
 int main()
 {
-  std::shared_ptr<GraphicsBuilderAdapter> graphicsBuilder;
-  Game<GraphicsBuilderAdapter> game(graphicsBuilder);
-  game.gameLoop();
+  //std::shared_ptr<Graphics> graphics;
+  //Game<Graphics> game(graphics);
+  //game.gameLoop();
+  Graphics graphics;
+//  auto wrapper = std::make_shared<SdlWrapper>();
+  Graphics graphicsWrapper(std::make_shared<SdlWrapper>());
   return 0;
 }
