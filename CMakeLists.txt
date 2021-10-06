@@ -1,27 +1,34 @@
-cmake_minimum_required(VERSION 3.16)
-
+cmake_minimum_required(VERSION 3.19)
+project(cavestory)
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_BUILD_TYPE Debug)
+add_compile_options(-Wall -Wextra -pedantic -Werror -DNDEBUG)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
 
-include(FetchContent)
-FetchContent_Declare(
-SDL2
-GIT_REPOSITORY "https://github.com/SDL-mirror/SDL.git"
-GIT_TAG release-2.0.10
+include(cmake/GTest.cmake)
+#include(cmake/boost.cmake)
+include(cmake/sdl2.cmake)
+
+find_package(SDL2 REQUIRED)
+include_directories (
+    ${GTEST_INCLUDE_DIRS}
+    ${GMOCK_INCLUDE_DIRS}
+    ${SDL2_INCLUDE_DIRS}
+    ${SDL2IMAGE_INCLUDE_DIRS}
+    src
+    test
 )
-FetchContent_GetProperties(SDL2)
-if (NOT sdl2_POPULATED)
-    FetchContent_Populate(SDL2)
-    add_subdirectory(${sdl2_SOURCE_DIR} ${sdl2_BINARY_DIR})
-endif ()
 
-project(CaveStory)
+#Tests
+file (GLOB TEST_SOURCES "test/*.cpp" )
+add_executable(${PROJECT_NAME}-ut  ${TEST_SOURCES})
+target_link_libraries(${PROJECT_NAME}-ut gtest gmock gtest_main ${SDL2_LIBRARIES} SDL2main)
+enable_testing()
+add_test(NAME ${PROJECT_NAME}_test COMMAND ${PROJECT_NAME}-ut)
+
+#Main
+file (GLOB SOURCES "src/*.cpp" )
+add_executable(${PROJECT_NAME}  ${SOURCES})
+target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} SDL2main)
 
 
-include_directories(src)
-
-add_subdirectory(src)
-add_subdirectory(test)
-add_subdirectory(inc)

@@ -1,5 +1,5 @@
 #include "SDL2/SDL.h"
-#include "Game.hpp"
+#include "Graphics.hpp"
 int main()
 {
   //std::shared_ptr<Graphics> graphics;

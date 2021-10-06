@@ -1,8 +1,11 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
-#include "Graphics.hpp"
 #include "SDL2/SDL.h"
+
+#include "Graphics.hpp"
 //#include "Game.hpp"
+
+//struct SDL_Deleter; 
 
 using namespace testing;
 

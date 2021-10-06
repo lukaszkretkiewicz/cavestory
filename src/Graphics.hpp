@@ -1,7 +1,6 @@
 #pragma once
 
 #include "SDL2/SDL.h"
-//#include "Graphics.hpp"
 #include <memory>
 struct SDL_Window;
 struct SDL_Renderer;
@@ -74,7 +73,6 @@ public:
 
 
     Graphics(std::shared_ptr<ISdlWrapper> wrapper) : window(nullptr, SDL_Deleter()), renderer(nullptr, SDL_Deleter())
-    //why copy ? const ? change to unique_ptr with move
     {
         wrapper->Init();
         window.reset(wrapper->CreateWindow("Cavestory", 
