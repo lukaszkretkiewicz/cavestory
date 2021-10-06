@@ -1,0 +1,54 @@
+@startuml
+title Symulator handlu morskiego SHM
+
+class Game {
+  -Map* map_
+  -Time* time_
+  -Player* player_
+  
+  +Game(size_t money, size_t days, size_t final_goal)
+  +void StartGame()
+}
+
+class Map {
+    +Map(Time* time);
+	+friend std::ostream& operator<<(std::ostream& out, const Map& map);
+}
+
+
+interface Observer {
+    +virtual void NextTimeTick() = 0
+    +virtual ~Observer()
+}
+
+class Time {
+    -size_t time_elapsed_
+    -std::vector<Observer*> obserwers_
+    
+	+Time()
+    +void AddObserver(Observer* obs);
+    +void RemoveObserver(Observer* obs);
+    +size_t GetElpasedTime() const
+    +Time& operator++();
+    
+    -ObserverIT GetObserverIt(Observer* obs);
+}
+
+class Delegate 
+{
+    +virtual ~Delegate();
+    +virtual void PayCrew(size_t money) = 0;
+}
+class Player {
+
+	+void NextTimeTick() override;
+}
+
+Game <|--- Player
+Game <|--- Map
+Game <|--- Time
+Observer <|--- Time
+Delegate <|--- Player : Inheritance
+@enduml
+
+
