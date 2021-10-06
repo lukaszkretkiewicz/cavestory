@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.19)
+cmake_minimum_required(VERSION 3.16)
 
 
 set(CMAKE_CXX_STANDARD 17)
@@ -19,8 +19,6 @@ endif ()
 
 project(CaveStory)
 
-
-include_directories(src)
 
 add_subdirectory(src)
 add_subdirectory(test)

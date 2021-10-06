@@ -1,9 +1,8 @@
 #include "SDL2/SDL.h"
 #include "Game.hpp"
+#define SDL_MAIN_HANDLED
 int main()
 {
-  std::shared_ptr<GraphicsBuilderAdapter> graphicsBuilder;
-  Game<GraphicsBuilderAdapter> game(graphicsBuilder);
-  game.gameLoop();
+
   return 0;
 }
