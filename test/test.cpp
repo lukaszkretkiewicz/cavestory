@@ -5,25 +5,28 @@
 #include "WrapperMock.hpp"
 using namespace testing;
 
-// TEST(WrapperTest, whenWrapperIsCreatedShouldPrepareWindow)
-// {
-//     Wrapper();
-// }
+TEST(WrapperTest, whenWrapperIsCreatedShouldPrepareWindow)
+{
+    Wrapper();
+}
 
-// TEST(GameTest, whenGameIsCreatedShouldPrepareWindow)
-// {
-//     WrapperMock wrapper;
-//     // EXPECT_CALL(wrapper, createWindow("CaveStory")).Times(1);
+TEST(GameTest, whenGameIsCreatedShouldPrepareWindow)
+{
+    // EXPECT_CALL(wrapper, createWindow("CaveStory")).Times(1);
 
-//     Game game(wrapper);
-// }
+    Game game(std::make_unique<WrapperMock>());
+}
 
-// TEST(GameTest, whenGameIsStartedShouldPrepareLoopThenEventBreakIt)
-// {
-//     WrapperMock wrapper;
-//     EXPECT_CALL(wrapper, isWindowOpen()).WillRepeatedly(Return(true));
-//     EXPECT_CALL(wrapper, closeWindow()).Times(1);
-//     Game game(wrapper);
-//     // game.receiveEvent(sf::Event::Closed);
-//     game.start();
-// }
+TEST(GameTest, whenGameIsStartedShouldPrepareLoopThenEventBreakIt)
+{
+    auto wrapper=std::make_unique<WrapperMock>();
+    EXPECT_CALL(*wrapper, isOpen()).WillOnce(Return(true)).WillOnce(Return(false));
+    EXPECT_CALL(*wrapper, pollEvent(_)).WillOnce(Return(false));
+    EXPECT_CALL(*wrapper, close()).Times(1);
+
+    Game game(std::move(wrapper));
+    sf::Event evnt;
+    evnt.type=sf::Event::Closed;
+    game.receiveExternalEvent(evnt);
+    game.start();
+}

@@ -9,8 +9,10 @@ public:
     {
         while (wrapper->isOpen())
         {
-            while (wrapper->pollEvent(actualEvent))
+
+            while (isEventReceived())
             {
+                // actualEvent.type=sf::Event::Closed;
                 switch (actualEvent.type)
                 {
                     case sf::Event::Closed:
@@ -30,9 +32,24 @@ public:
             }
         }
     }
-    void receiveEvent(sf::Event::EventType evnt) { actualEvent.type = evnt; }
+    void receiveExternalEvent(sf::Event evnt)
+    {
+        actualEvent = evnt;
+        isExternalEventReceived = true;
+    }
 
 private:
     std::unique_ptr<IWrapper> wrapper;
     sf::Event actualEvent;
+    bool isExternalEventReceived = false;
+
+    bool isEventReceived()
+    {
+        if (isExternalEventReceived)
+        {
+            isExternalEventReceived = false;
+            return true;
+        }
+        return wrapper->pollEvent(actualEvent);
+    }
 };
