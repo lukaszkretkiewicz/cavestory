@@ -1,15 +1,21 @@
 #include "Wrapper.hpp"
+#include "Player.hpp"
 #include <iostream>
 class Game
 {
 public:
     Game() = delete;
+    ~Game() = default;
     Game(std::unique_ptr<IWrapper> _wrapper) : wrapper(std::move(_wrapper)) {}
     void start()
     {
         while (isWindowOpen())
         {
-            executeEvent();
+            if (!isGoingToCloseAfterReceivingEvent())
+            {
+                wrapper->draw(player);
+                wrapper->display();
+            }
         }
     }
     void receiveExternalEvent(sf::Event evnt)
@@ -21,11 +27,12 @@ public:
 private:
     std::unique_ptr<IWrapper> wrapper;
     sf::Event actualEvent;
+    Player player;
     bool isExternalEventReceived = false;
 
-    bool isWindowOpen(){ return wrapper->isOpen();}
+    bool isWindowOpen() { return wrapper->isOpen(); }
 
-    void executeEvent()
+    bool isGoingToCloseAfterReceivingEvent()
     {
         while (isEventReceived())
         {
@@ -33,7 +40,7 @@ private:
             {
                 case sf::Event::Closed:
                     wrapper->close();
-                    break;
+                    return true;
                 case sf::Event::Resized:
                     std::cout << "New window width: " << actualEvent.size.width
                               << "New window height: " << actualEvent.size.height << std::endl;
@@ -46,9 +53,10 @@ private:
                     continue;
             }
         }
+        return false;
     }
 
-     bool isEventReceived()
+    bool isEventReceived()
     {
         if (isExternalEventReceived)
         {
