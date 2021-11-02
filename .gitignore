@@ -1,0 +1,9 @@
+build/*
+build
+build
+build/
+.vscode/launch.json
+tags
+.vscode/launch.json .vscode/settings.json .vscode/tasks.json
+.vscode
+.clang-format
