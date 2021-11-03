@@ -11,7 +11,7 @@ public:
     void close() override { window->close(); }
     bool pollEvent(sf::Event& evnt) override { return window->pollEvent(evnt); }
 
-    void draw(Player player) override { window->draw(player.getShape()); }
+    void draw(std::unique_ptr<IPlayer> player) override { window->draw(player->getShape()); }
     void display() override { window->display(); }
     void clear() override { window->clear(); }
 

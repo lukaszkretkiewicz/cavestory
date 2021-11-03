@@ -1,13 +1,14 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 #include "Game.hpp"
-#include "Wrapper.hpp"
 #include "WrapperMock.hpp"
+#include "PlayerMock.hpp"
 using namespace testing;
 
 struct GameTest : public testing::Test
 {
     std::unique_ptr<WrapperMock> wrapper;
+    std::unique_ptr<PlayerMock> playerMock;
     void prepareLoop()
     {
         wrapper = std::make_unique<WrapperMock>();
@@ -17,13 +18,14 @@ struct GameTest : public testing::Test
     void prepareToDraw()
     {
         wrapper = std::make_unique<WrapperMock>();
+        playerMock = std::make_unique<PlayerMock>();
         EXPECT_CALL(*wrapper, isOpen()).WillOnce(Return(true)).WillOnce(Return(false));
         EXPECT_CALL(*wrapper, pollEvent(_)).WillOnce(Return(false));
     }
     void expectUpdate()
     {
         EXPECT_CALL(*wrapper, clear());
-        EXPECT_CALL(*wrapper, draw(_));
+        EXPECT_CALL(*wrapper, draw(NotNull()));
         EXPECT_CALL(*wrapper, display());
     }
 };
@@ -48,11 +50,14 @@ TEST_F(GameTest, canDrawPlayer)
     game.start();
 }
 
-// TEST_F(GameTest, canMovePlayer)
-// {
-//     prepareToDraw();
-//     expectUpdate();
-//     Game game(std::move(wrapper));
+TEST_F(GameTest, canMovePlayer)
+{
+    prepareToDraw();
+    expectUpdate();
 
-//     game.start();
-// }
+    EXPECT_CALL(*playerMock, move()).Times(1);
+
+    Game game(std::move(wrapper), std::move(playerMock));
+
+    game.start();
+}

@@ -11,6 +11,7 @@ public:
         : wrapper(std::move(_wrapper)), player(std::move(_player))
     {
     }
+
     void start()
     {
         while (isWindowOpen())
@@ -20,6 +21,7 @@ public:
                 updateWindow();
             }
     }
+
     void receiveExternalEvent(sf::Event evnt)
     {
         actualEvent = evnt;
@@ -70,7 +72,7 @@ private:
     void updateWindow()
     {
         wrapper->clear();
-        wrapper->draw(dynamic_cast<Player&>(*player));
+        wrapper->draw(std::move(player));
         wrapper->display();
     }
 };
