@@ -20,6 +20,12 @@ struct GameTest : public testing::Test
         EXPECT_CALL(*wrapper, isOpen()).WillOnce(Return(true)).WillOnce(Return(false));
         EXPECT_CALL(*wrapper, pollEvent(_)).WillOnce(Return(false));
     }
+    void expectUpdate()
+    {
+        EXPECT_CALL(*wrapper, clear());
+        EXPECT_CALL(*wrapper, draw(_));
+        EXPECT_CALL(*wrapper, display());
+    }
 };
 
 TEST_F(GameTest, whenGameIsStartedShouldPrepareLoopThenEventBreakIt)
@@ -36,10 +42,17 @@ TEST_F(GameTest, whenGameIsStartedShouldPrepareLoopThenEventBreakIt)
 TEST_F(GameTest, canDrawPlayer)
 {
     prepareToDraw();
-    EXPECT_CALL(*wrapper, draw(_));
-    EXPECT_CALL(*wrapper, display());
+    expectUpdate();
     Game game(std::move(wrapper));
 
     game.start();
 }
 
+// TEST_F(GameTest, canMovePlayer)
+// {
+//     prepareToDraw();
+//     expectUpdate();
+//     Game game(std::move(wrapper));
+
+//     game.start();
+// }

@@ -6,17 +6,19 @@ class Game
 public:
     Game() = delete;
     ~Game() = default;
-    Game(std::unique_ptr<IWrapper> _wrapper) : wrapper(std::move(_wrapper)) {}
+    Game(std::unique_ptr<IWrapper> _wrapper) : wrapper(std::move(_wrapper)), player(std::make_unique<Player>()) {} // to test without PlayerMock
+    Game(std::unique_ptr<IWrapper> _wrapper, std::unique_ptr<IPlayer> _player) // to test with PlayerMock
+        : wrapper(std::move(_wrapper)), player(std::move(_player))
+    {
+    }
     void start()
     {
         while (isWindowOpen())
-        {
             if (!isGoingToCloseAfterReceivingEvent())
             {
-                wrapper->draw(player);
-                wrapper->display();
+                player->move();
+                updateWindow();
             }
-        }
     }
     void receiveExternalEvent(sf::Event evnt)
     {
@@ -27,7 +29,7 @@ public:
 private:
     std::unique_ptr<IWrapper> wrapper;
     sf::Event actualEvent;
-    Player player;
+    std::unique_ptr<IPlayer> player;
     bool isExternalEventReceived = false;
 
     bool isWindowOpen() { return wrapper->isOpen(); }
@@ -64,5 +66,11 @@ private:
             return true;
         }
         return wrapper->pollEvent(actualEvent);
+    }
+    void updateWindow()
+    {
+        wrapper->clear();
+        wrapper->draw(dynamic_cast<Player&>(*player));
+        wrapper->display();
     }
 };

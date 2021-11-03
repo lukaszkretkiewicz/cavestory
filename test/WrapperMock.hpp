@@ -11,4 +11,5 @@ public:
     MOCK_METHOD(bool, pollEvent, (sf::Event&), (override));
     MOCK_METHOD(void, draw, (Player), (override));
     MOCK_METHOD(void, display, (), (override));
+    MOCK_METHOD(void, clear, (), (override));
 };

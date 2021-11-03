@@ -13,4 +13,5 @@ public:
     virtual bool pollEvent(sf::Event&) = 0;
     virtual void draw(Player) = 0;
     virtual void display() = 0;
+    virtual void clear() = 0;
 };

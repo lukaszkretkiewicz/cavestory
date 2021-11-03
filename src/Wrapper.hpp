@@ -11,8 +11,10 @@ public:
     void close() override { window->close(); }
     bool pollEvent(sf::Event& evnt) override { return window->pollEvent(evnt); }
 
-    void draw(Player player) { window->draw(player.getShape()); }
-    void display() { window->display(); }
+    void draw(Player player) override { window->draw(player.getShape()); }
+    void display() override { window->display(); }
+    void clear() override { window->clear(); }
+
     auto operator-> () { return window.get(); }
 
 private:
