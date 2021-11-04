@@ -1,6 +1,10 @@
 #include "Wrapper.hpp"
 #include "Player.hpp"
 #include <iostream>
+
+class IWrapper;
+class IPlayer;
+
 class Game
 {
 public:
@@ -19,6 +23,7 @@ public:
             if (!isGoingToCloseAfterReceivingEvent())
             {
                 player->move();
+                player->setPosition(wrapper);
                 updateWindow();
             }
     }

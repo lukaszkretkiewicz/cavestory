@@ -61,3 +61,15 @@ TEST_F(GameTest, canMovePlayer)
 
     game.start();
 }
+
+// TEST_F(GameTest, canUseMouseToSetPlayerPosition)
+// {
+//     prepareToDraw();
+//     expectUpdate();
+
+//     EXPECT_CALL(*playerMock, setPosition(_));
+
+//     Game game(std::move(wrapper), std::move(playerMock));
+
+//     game.start();
+// }

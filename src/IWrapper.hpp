@@ -1,6 +1,7 @@
 #pragma once
 #include "SFML/Graphics.hpp"
-#include "Player.hpp"
+class IPlayer;
+
 class IWrapper
 {
 public:
@@ -14,4 +15,5 @@ public:
     virtual void draw(std::unique_ptr<IPlayer>&) = 0;
     virtual void display() = 0;
     virtual void clear() = 0;
+    virtual sf::WindowBase& getWindow() = 0;
 };

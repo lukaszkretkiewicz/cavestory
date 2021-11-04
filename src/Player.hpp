@@ -1,6 +1,7 @@
 #pragma once
-#include "Wrapper.hpp"
 #include "IPlayer.hpp"
+class IWrapper;
+
 class Player : public IPlayer
 {
 public:
@@ -25,6 +26,15 @@ public:
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
         {
             shape.move(0.0f, 0.1f);
+        }
+    }
+
+    void setPosition(const std::unique_ptr<IWrapper>& wrapper) override
+    {
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+        {
+            sf::Vector2i mousePos = sf::Mouse::getPosition(wrapper->getWindow());
+            shape.setPosition(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
         }
     }
 
