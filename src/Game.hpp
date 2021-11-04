@@ -6,7 +6,8 @@ class Game
 public:
     Game() = delete;
     ~Game() = default;
-    Game(std::unique_ptr<IWrapper> _wrapper) : wrapper(std::move(_wrapper)), player(std::make_unique<Player>()) {} // to test without PlayerMock
+    Game(std::unique_ptr<IWrapper> _wrapper)
+        : wrapper(std::move(_wrapper)), player(std::make_unique<Player>()) {}  // to test without PlayerMock
     Game(std::unique_ptr<IWrapper> _wrapper, std::unique_ptr<IPlayer> _player) // to test with PlayerMock
         : wrapper(std::move(_wrapper)), player(std::move(_player))
     {
@@ -72,7 +73,7 @@ private:
     void updateWindow()
     {
         wrapper->clear();
-        wrapper->draw(std::move(player));
+        wrapper->draw(player);
         wrapper->display();
     }
 };
