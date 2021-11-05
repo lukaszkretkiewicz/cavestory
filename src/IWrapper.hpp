@@ -1,6 +1,6 @@
 #pragma once
 #include "SFML/Graphics.hpp"
-class IPlayer;
+#include "IPlayer.hpp"
 
 class IWrapper
 {

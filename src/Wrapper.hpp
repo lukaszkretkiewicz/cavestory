@@ -1,7 +1,6 @@
 #pragma once
 #include "IWrapper.hpp"
 class IPlayer;
-class IWrapper;
 
 class Wrapper : public IWrapper
 {

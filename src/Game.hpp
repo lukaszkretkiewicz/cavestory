@@ -23,7 +23,6 @@ public:
             if (!isGoingToCloseAfterReceivingEvent())
             {
                 player->move();
-                player->setPosition(wrapper);
                 updateWindow();
             }
     }

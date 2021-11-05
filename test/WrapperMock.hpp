@@ -12,4 +12,5 @@ public:
     MOCK_METHOD(void, draw, (std::unique_ptr<IPlayer>&), (override));
     MOCK_METHOD(void, display, (), (override));
     MOCK_METHOD(void, clear, (), (override));
+    MOCK_METHOD(sf::WindowBase&, getWindow, (), (override));
 };
