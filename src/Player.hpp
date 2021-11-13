@@ -7,8 +7,10 @@ class IMovement;
 class Player : public IPlayer
 {
 public:
-    Player() : shape(sf::Vector2f(100.0f, 100.0f)), movement(std::make_unique<KeyboardMovement>()) {}
-    Player(std::unique_ptr<IMovement> movemnt) : shape(sf::Vector2f(100.0f, 100.0f)), movement(std::move(movemnt)) {}
+    Player(std::unique_ptr<IMovement> movemnt = std::make_unique<KeyboardMovement>())
+        : shape(sf::Vector2f(100.0f, 100.0f)), movement(std::move(movemnt))
+    {
+    }
     ~Player() override = default;
 
     sf::RectangleShape getShape() override { return shape; }
